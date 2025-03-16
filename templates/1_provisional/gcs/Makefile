@@ -1,6 +1,6 @@
 include provisionners/terraform._.mk
 
-WORKSPACE_NAME:=sandbox
+WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
 
 setup: terraform_install
 	$(info Setup the environment)
