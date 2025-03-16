@@ -1,5 +1,5 @@
 
-resource "terraform_data" "microk8s_addons_dns" {
+resource "terraform_data" "microk8s_addons_ingress" {
   count      = var.addon_ingress ? 1 : 0
   depends_on = [terraform_data.microk8s_setup]
   triggers_replace = [
