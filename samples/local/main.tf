@@ -21,9 +21,9 @@ module "k2_physical_platform" {
   addon_storage     = true
   addon_dns         = true
   addon_ingress     = true
-  addon_certmanager = true
+  addon_certmanager = false
 }
 
-output "name" {
-  value = "Hello, World!  in ${var.space}"
+output "config" {
+  value = "Hello, World!  in ${module.k2_physical_platform.k8s_config}"
 }
