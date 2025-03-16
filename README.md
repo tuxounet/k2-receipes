@@ -6,7 +6,7 @@ Receipes and cookbooks for k2 applied component
 
 5 layers pattern
 
-- 1_Authority
+- 1 Provisional
 - 2_Physical
 - 3_Technical
 - 4_Logical
