@@ -1,0 +1,9 @@
+k2:
+  metadata:
+    id: k2.receipes.provisional.gcs
+    kind: "template"
+  body:
+    name: "gcs"
+    description: "This is a provisional template to create a gcs bucket"
+    parameters: {}
+    scripts: {}
