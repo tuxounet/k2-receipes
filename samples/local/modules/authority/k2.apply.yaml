@@ -1,12 +1,12 @@
 k2:
   metadata:
-    id: k2.receipes.samples.local.modules.microk8s
+    id: k2.receipes.samples.local.modules.authority
     kind: template-apply
   body:
     template:
       source: inventory
       params:
-        id:  k2.receipes.physical.platforms.microk8s
+        id:  k2.receipes.physical.authority.standalone
     vars:
       name: KNewApp
        

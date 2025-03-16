@@ -1,6 +1,6 @@
 k2:
   metadata:
-    id: k2.receipes.physical.microk8s
+    id: k2.receipes.physical.platforms.microk8s
     kind: "template"
   body:
     name: "microk8s"

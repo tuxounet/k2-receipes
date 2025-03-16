@@ -1,0 +1,9 @@
+k2:
+  metadata:
+    id: k2.receipes.physical.authority.standalone
+    kind: "template"
+  body:
+    name: "authority"
+    description: "This is a template for a authoriy of k8s  cluster"
+    parameters: {}
+    scripts: {}

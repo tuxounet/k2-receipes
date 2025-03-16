@@ -14,6 +14,13 @@ variable "instance_name" {
   type = string
 
 }
+
+module "k2_physical_authority" {
+  source         = "./modules/authority"
+  ca_common_name = "${var.instance_name}-${var.space}.k2"
+}
+
+
 module "k2_physical_platform" {
   source            = "./modules/microk8s"
   instance_name     = var.instance_name
