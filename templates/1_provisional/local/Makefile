@@ -1,5 +1,6 @@
 include provisionners/terraform._.mk
 
+RUN_DIR:=$(shell pwd)
 WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
 
 setup: terraform_install
@@ -11,7 +12,7 @@ nuke: terraform_uninstall
 
 validate: setup 
 	$(info Validate the environment)	
-	${TERRAFORM_COMMAND} validate -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}"
+	${TERRAFORM_COMMAND} validate -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
 prepare: setup terraform_auth
 	${TERRAFORM_COMMAND} init
@@ -19,15 +20,15 @@ prepare: setup terraform_auth
 
 plan: prepare
 	$(info Plan the environment)
-	${TERRAFORM_COMMAND} plan  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}"
+	${TERRAFORM_COMMAND} plan  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
 apply: prepare
 	$(info Apply the environment)
-	${TERRAFORM_COMMAND} apply -auto-approve  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}"
+	${TERRAFORM_COMMAND} apply -auto-approve  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
 destroy: prepare
 	$(info Destroy the environment)
-	${TERRAFORM_COMMAND} destroy  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}"
+	${TERRAFORM_COMMAND} destroy  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
 graph: validate
 	$(info Generate the graph)

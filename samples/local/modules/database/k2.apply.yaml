@@ -1,0 +1,12 @@
+k2:
+  metadata:
+    id: k2.receipes.samples.local.modules.database
+    kind: template-apply
+  body:
+    template:
+      source: inventory
+      params:
+        id:  k2.receipes.technical.storage.databases.standalone-postgres
+    vars:
+      name: KNewApp
+       

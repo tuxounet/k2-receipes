@@ -14,6 +14,10 @@ variable "instance_name" {
   type = string
 
 }
+variable "run_dir" {
+  type = string
+
+}
 
 module "k2_physical_authority" {
   source         = "./modules/authority"
@@ -23,7 +27,7 @@ module "k2_physical_authority" {
 
 module "k2_physical_platform" {
   source            = "./modules/microk8s"
-  instance_name     = var.instance_name
+  run_dir           = var.run_dir
   addon_registry    = true
   addon_storage     = true
   addon_dns         = true

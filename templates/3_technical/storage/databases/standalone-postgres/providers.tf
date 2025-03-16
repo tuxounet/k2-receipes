@@ -6,9 +6,7 @@ terraform {
     }
   }
 }
-
 provider "kubernetes" {
-  config_path = abspath("${var.run_dir}/.k2/home/.kube/config")
-}
+  config_path = var.k8s_config
 
- 
+}

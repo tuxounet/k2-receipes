@@ -1,0 +1,9 @@
+k2:
+  metadata:
+    id: k2.receipes.technical.storage.databases.standalone-postgres
+    kind: "template"
+  body:
+    name: "standalone-postgres"
+    description: "This is a template for a authoriy of k8s  cluster"
+    parameters: {}
+    scripts: {}

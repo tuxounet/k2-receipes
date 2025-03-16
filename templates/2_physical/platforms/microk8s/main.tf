@@ -5,7 +5,6 @@ resource "terraform_data" "microk8s_setup" {
   ]
  
 
-
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT

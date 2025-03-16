@@ -1,6 +1,7 @@
-variable "instance_name" {
+
+variable "run_dir" {
   type        = string
-  description = "The name of the instance"
+  description = "The run directory"  
 }
 
 variable "addon_registry" {
