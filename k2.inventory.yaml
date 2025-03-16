@@ -1,0 +1,14 @@
+k2:
+  metadata:
+    id: k2.recepies
+    kind: inventory
+  body:
+    folders:
+      ignore: []
+      templates: 
+        - "templates/**/k2.template.yaml"
+      applies:
+        - "samples/**/k2.apply.yaml"
+
+    vars:
+      title: k2 cli samples and tests

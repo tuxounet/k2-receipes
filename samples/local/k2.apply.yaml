@@ -1,0 +1,12 @@
+k2:
+  metadata:
+    id: k2.receipes.samples.local
+    kind: template-apply
+  body:
+    template:
+      source: inventory
+      params:
+        id: k2.receipes.provisional.local
+    vars:
+      name: KNewApp
+       

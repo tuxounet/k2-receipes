@@ -1,0 +1,9 @@
+k2:
+  metadata:
+    id: k2.receipes.provisional.local
+    kind: "template"
+  body:
+    name: "local"
+    description: "This is a provisional template with local folder backend"
+    parameters: {}
+    scripts: {}

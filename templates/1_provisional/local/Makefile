@@ -1,6 +1,6 @@
 include provisionners/terraform._.mk
 
-WORKSPACE_NAME:=sandbox
+WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
 
 setup: terraform_install
 	$(info Setup the environment)
@@ -14,8 +14,8 @@ validate: setup
 	${TERRAFORM_COMMAND} validate -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}"
 
 prepare: setup terraform_auth
+	${TERRAFORM_COMMAND} init
 	${TERRAFORM_COMMAND} fmt
-	${TERRAFORM_COMMAND} init -backend-config=./spaces/${WORKSPACE_NAME}.backend.hcl
 
 plan: prepare
 	$(info Plan the environment)
