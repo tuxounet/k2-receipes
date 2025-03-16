@@ -1,3 +1,3 @@
-output "id" {
-  value = outscale_vm.vm.id
+output "name" {
+  value = var.instance_name
 }

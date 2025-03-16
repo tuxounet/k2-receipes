@@ -1,4 +1,4 @@
-variable "keypair_name" {
+variable "instance_name" {
   type = string
-  description = "The name of a keypair"
+  description = "The name of the instance"
 }

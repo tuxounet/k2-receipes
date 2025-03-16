@@ -1,1 +1,1 @@
-var_name = "keypair_name"
+instance_name = "microk8s-dev"

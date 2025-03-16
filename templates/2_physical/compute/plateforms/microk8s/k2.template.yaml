@@ -1,0 +1,9 @@
+k2:
+  metadata:
+    id: k2.receipes.physical.microk8s
+    kind: "template"
+  body:
+    name: "microk8s"
+    description: "This is a physical template for microk8s"
+    parameters: {}
+    scripts: {}
