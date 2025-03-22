@@ -1,20 +1,21 @@
 #!/bin/bash
-START_DIR=$(pwd)
+ROOT_DIR=$(git rev-parse --show-toplevel)
+RUN_DIR=${ROOT_DIR}/.k2
 
 TOFU_VERSION="1.9.0"
 TOFU_PLATFORM="linux"
 TOFU_ARCH="amd64"
 
-if [ ! -f  ${START_DIR}/.k2/bin/tofu ] ; then
+if [ ! -f  ${RUN_DIR}/bin/tofu ] ; then
 	echo "OpenTofu n'est pas installé. Installation en cours..."
-	mkdir -p ${START_DIR}/.k2/tmp/tofu
-	curl -o ${START_DIR}/.k2/tmp/tofu/tofu.tar.gz -fsL https://github.com/opentofu/opentofu/releases/download/v${TOFU_VERSION}/tofu_${TOFU_VERSION}_${TOFU_PLATFORM}_${TOFU_ARCH}.tar.gz 
-	cd ${START_DIR}/.k2/tmp/tofu
+	mkdir -p ${RUN_DIR}/tmp/tofu
+	curl -o ${RUN_DIR}/tmp/tofu/tofu.tar.gz -fsL https://github.com/opentofu/opentofu/releases/download/v${TOFU_VERSION}/tofu_${TOFU_VERSION}_${TOFU_PLATFORM}_${TOFU_ARCH}.tar.gz 
+	cd ${RUN_DIR}/tmp/tofu
 	tar -xvzf  ./tofu.tar.gz   
-	mkdir -p ${START_DIR}/.k2/bin
-	mv tofu ${START_DIR}/.k2/bin/tofu
-	chmod +x ${START_DIR}/.k2/bin/tofu
-	rm -rf ${START_DIR}/.k2/tmp/tofu
+	mkdir -p ${RUN_DIR}/bin
+	mv tofu ${RUN_DIR}/bin/tofu
+	chmod +x ${RUN_DIR}/bin/tofu
+	rm -rf ${RUN_DIR}/tmp/tofu
 else
 	echo "OpenTofu est déjà installé."
 fi
