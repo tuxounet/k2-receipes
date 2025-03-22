@@ -33,3 +33,5 @@ destroy: prepare
 graph: validate
 	$(info Generate the graph)
 	${TERRAFORM_COMMAND} graph  
+
+
