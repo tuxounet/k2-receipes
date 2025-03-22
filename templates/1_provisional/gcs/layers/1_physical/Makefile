@@ -13,7 +13,7 @@ validate:
 	${TERRAFORM_COMMAND} validate -var-file=${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
 prepare: terraform_auth
-	${TERRAFORM_COMMAND} init -backend-config="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.backend.hcl" -backend-config="prefix=k2/${APP_NAME}/${WORKSPACE_NAME}/${LAYER_NAME}" \
+	${TERRAFORM_COMMAND} init -backend-config="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.backend.hcl" -backend-config="prefix=k2/${APP_NAME}/${WORKSPACE_NAME}/${LAYER_NAME}"
 	${TOFU_EXECUTABLE} fmt
 
 plan: prepare
