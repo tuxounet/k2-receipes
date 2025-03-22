@@ -15,7 +15,7 @@ validate: setup
 	${TERRAFORM_COMMAND} validate -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
 prepare: setup terraform_auth
-	${TERRAFORM_COMMAND} init
+	${TERRAFORM_COMMAND} init -backend-config="./spaces/${WORKSPACE_NAME}.backend.hcl"
 	${TERRAFORM_COMMAND} fmt
 
 plan: prepare
