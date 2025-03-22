@@ -14,9 +14,3 @@ provider "kubernetes" {
 
 }
 
-provider "ldap" {
-  host          = "ldap.mycompany.tld"
-  port          = 389
-  bind_user     = "ldap_user"
-  bind_password = "ldap_password"
-}
