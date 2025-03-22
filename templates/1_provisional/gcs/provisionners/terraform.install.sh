@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 ROOT_DIR=$(git rev-parse --show-toplevel)
 RUN_DIR=${ROOT_DIR}/.k2
 

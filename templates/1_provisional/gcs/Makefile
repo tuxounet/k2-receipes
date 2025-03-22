@@ -11,7 +11,7 @@ validate: prepare
 	$(info Validate the environment)	
 	${TERRAFORM_COMMAND} validate -var-file=${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
-prepare: terraform_auth
+prepare: terraform_auth terraform_install
 	${TERRAFORM_COMMAND} init -backend-config="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.backend.hcl" -backend-config="prefix=k2/${APP_NAME}/${WORKSPACE_NAME}"
 	${TOFU_EXECUTABLE} fmt
 

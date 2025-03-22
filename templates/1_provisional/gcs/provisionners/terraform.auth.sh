@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 START_DIR=$(pwd)
 
 gcloud auth application-default print-access-token > /dev/null 2>&1
