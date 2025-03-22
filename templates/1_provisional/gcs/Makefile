@@ -14,15 +14,15 @@ validate: setup
 	$(info Validate the environment)	
 	make -C ${RUN_DIR}/layers/1_physical validate
 
-plan: validate
+plan:  setup
 	$(info Plan the environment)
 	make -C ${RUN_DIR}/layers/1_physical plan
 
-apply: validate
+apply:  setup
 	$(info Apply the environment)
 	make -C ${RUN_DIR}/layers/1_physical apply
 
-destroy: validate
+destroy:  setup
 	$(info Destroy the environment)
 	make -C ${RUN_DIR}/layers/1_physical destroy
 
