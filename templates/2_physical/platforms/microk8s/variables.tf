@@ -32,3 +32,13 @@ variable "addon_certmanager" {
   default     = false
   
 }
+
+
+variable "root_ca_cert" {
+  type        = string
+  description = "The root CA certificate"
+}
+variable "root_ca_key" {
+  type        = string
+  description = "The root CA key"
+}
