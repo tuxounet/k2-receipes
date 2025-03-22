@@ -14,24 +14,18 @@ validate: setup
 	$(info Validate the environment)	
 	${TERRAFORM_COMMAND} validate -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
-prepare: setup terraform_auth
-	${TERRAFORM_COMMAND} init -backend-config="./spaces/${WORKSPACE_NAME}.backend.hcl"
-	${TERRAFORM_COMMAND} fmt
 
-plan: prepare
+plan: validate
 	$(info Plan the environment)
-	${TERRAFORM_COMMAND} plan  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
+	make -C ${RUN_DIR}/layers/1_physical plan
 
-apply: prepare
+apply: validate
 	$(info Apply the environment)
-	${TERRAFORM_COMMAND} apply -auto-approve  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
+	make -C ${RUN_DIR}/layers/1_physical apply
 
-destroy: prepare
+destroy: validate
 	$(info Destroy the environment)
-	${TERRAFORM_COMMAND} destroy  -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
+	make -C ${RUN_DIR}/layers/1_physical destroy
 
-graph: validate
-	$(info Generate the graph)
-	${TERRAFORM_COMMAND} graph  
 
 
