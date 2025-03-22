@@ -3,7 +3,7 @@ ROOT_DIR:=$(shell git rev-parse --show-toplevel)
 include ${ROOT_DIR}/provisionners/terraform._.mk
 
 APP_NAME:=$(shell basename $(ROOT_DIR))
-RUN_DIR:=$(shell pwd)
+RUN_DIR:=$(shell echo ${ROOT_DIR})
 LAYER_NAME:=$(shell basename $(RUN_DIR))
 
 WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
