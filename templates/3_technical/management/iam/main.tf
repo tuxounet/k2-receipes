@@ -1,7 +1,6 @@
-resource "helm_release" "nginx" {
-  name       = "nginx"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "nginx"
+resource "helm_release" "management_iam" {
+  name  = "management-iam"
+  chart = "${path.module}/chart"
 
   values = [
     file("${path.module}/values.yaml")
