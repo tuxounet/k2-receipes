@@ -18,8 +18,4 @@ variable "ldap_base_dn" {
   description = "The ldap base dn" 
 }
 
-variable "ldap_root_password" {
-  type        = string
-  description = "The ldap root password" 
-  
-}
+ 

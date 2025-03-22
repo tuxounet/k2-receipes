@@ -1,5 +1,12 @@
 
 
+resource "random_password" "ldap_root_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+
 resource "kubernetes_manifest" "ldap_deployment" {
   manifest = {
     apiVersion = "apps/v1"
@@ -66,7 +73,7 @@ resource "kubernetes_manifest" "ldap_deployment" {
                 },
                 {
                   name  = "LDAP_ADMIN_PASSWORD"
-                  value = var.ldap_root_password
+                  value = random_password.password.result
                 },
                 {
                   name  = "LDAP_READONLY_USER"
