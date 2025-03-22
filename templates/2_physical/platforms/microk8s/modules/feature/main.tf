@@ -1,6 +1,6 @@
 resource "terraform_data" "microk8s_enable" {
   triggers_replace = [
-    fileexists("${ var.run_dir}/.k2/state/status/${var.feature_name}"),
+    fileexists("${var.run_dir}/state/status/${var.feature_name}"),
   ]
   input = {
     run_dir      = var.run_dir
@@ -14,8 +14,8 @@ resource "terraform_data" "microk8s_enable" {
         if [ $ADDON_ENABLED -eq 0 ]; then
             microk8s.enable ${self.input.feature_name}
         fi
-        mkdir -p ${self.input.run_dir}/.k2/state/status
-        touch ${self.input.run_dir}/.k2/state/status/microk8s.${self.input.feature_name}        
+        mkdir -p ${self.input.run_dir}/state/status
+        touch ${self.input.run_dir}/state/status/microk8s.${self.input.feature_name}        
     EOT
   }
 
@@ -27,10 +27,8 @@ resource "terraform_data" "microk8s_enable" {
         if [ $ADDON_ENABLED -eq 1 ]; then
             microk8s.disable ${self.input.feature_name}
         fi
-        rm -rf ${self.input.run_dir}/.k2/state/status/microk8s.certmanager
+        rm -rf ${self.input.run_dir}/state/status/microk8s.${self.input.feature_name}  
     EOT
   }
-
-
 
 }
