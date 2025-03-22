@@ -7,6 +7,7 @@ provider "ldap" {
 }
 
 resource "ldap_ou" "org" {
+  depends_on  = [kubernetes_manifest.ldap_service_external]
   name        = var.ldap_org
   ou          = "ou=${var.ldap_org},${var.ldap_base_dn}"
   description = "My OU description"
