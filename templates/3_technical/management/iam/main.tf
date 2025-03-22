@@ -8,47 +8,4 @@ resource "kubernetes_namespace" "management_iam" {
 }
 
 
-
-resource "kubernetes_manifest" "ldap_deployment" {
-  
-  
-  manifest = <<EOF
-  apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ldap
-  namespace: ${kubernetes_namespace.management_iam.metadata.0.name}
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 1
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: ldap
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      labels:
-        app: ldap
-    spec:
-      containers:
-        image: docker.io/nginx:latest
-        imagePullPolicy: IfNotPresent
-        name: ldap
-        ports:
-          - containerPort: 5000
-            name: ldap
-            protocol: TCP
-        resources: {}
-
-      restartPolicy: Always
-
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-EOF
-
-}
+ 
