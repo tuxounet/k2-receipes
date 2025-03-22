@@ -1,7 +1,7 @@
 resource "terraform_data" "authority_ca" {
   triggers_replace = [
-    fileexists("../../.k2/etc/pki/ca/ca.key"),
-    fileexists("../../.k2/etc/pki/ca/ca.crt"),
+    fileexists("${var.run_dir}/etc/pki/ca/ca.key"),
+    fileexists("${var.run_dir}/etc/pki/ca/ca.crt"),
   ]
  
 
@@ -10,13 +10,13 @@ resource "terraform_data" "authority_ca" {
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
               
-        mkdir -p $(pwd)/.k2/etc/pki/ca       
-        if [ ! -f $(pwd)/.k2/etc/pki/ca/ca.key ]; then
-            openssl genrsa -out $(pwd)/.k2/etc/pki/ca/ca.key 4096
+        mkdir -p ${var.run_dir}/etc/pki/ca       
+        if [ ! -f ${var.run_dir}/etc/pki/ca/ca.key ]; then
+            openssl genrsa -out ${var.run_dir}/etc/pki/ca/ca.key 4096
         fi
 
-        if [ ! -f $(pwd)/.k2/etc/pki/ca/ca.crt ]; then
-            openssl req -x509 -new -nodes -key $(pwd)/.k2/etc/pki/ca/ca.key -sha256 -days 3650 -out $(pwd)/.k2/etc/pki/ca/ca.crt -subj "/C=US/ST=CA/L=San Francisco/O=K2/OU=K2/CN=${var.ca_common_name}"
+        if [ ! -f ${var.run_dir}/etc/pki/ca/ca.crt ]; then
+            openssl req -x509 -new -nodes -key ${var.run_dir}/etc/pki/ca/ca.key -sha256 -days 3650 -out ${var.run_dir}/etc/pki/ca/ca.crt -subj "/C=US/ST=CA/L=San Francisco/O=K2/OU=K2/CN=${var.ca_common_name}"
         fi
 
     
@@ -27,9 +27,7 @@ resource "terraform_data" "authority_ca" {
     when        = destroy
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
-        
-        rm -rf $(pwd)/.k2/etc/pki/ca
-        
+        rm -rf ${var.run_dir}/etc/pki/ca
     EOT
   }
 

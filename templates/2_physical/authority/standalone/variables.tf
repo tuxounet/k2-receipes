@@ -4,3 +4,9 @@ variable "ca_common_name" {
 
   
 }
+
+variable "run_dir" {
+  type        = string
+  description = "The run directory"
+  
+}
