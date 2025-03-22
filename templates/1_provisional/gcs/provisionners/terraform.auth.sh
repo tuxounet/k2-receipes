@@ -12,6 +12,6 @@ fi
 ROOT_DIR=$(git rev-parse --show-toplevel)
 RUN_DIR=${ROOT_DIR}/.k2
 
-WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
+WORKSPACE_NAME:=$(git rev-parse --abbrev-ref HEAD || echo "sample")
 mkdir -p ${RUN_DIR}/state/${WORKSPACE_NAME}
 
