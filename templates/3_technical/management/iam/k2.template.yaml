@@ -1,0 +1,9 @@
+k2:
+  metadata:
+    id: k2.receipes.technical.management.iam.local-ldap-idp
+    kind: "template"
+  body:
+    name: "local-ldap-idp"
+    description: "This is a template for a local ldap idp"
+    parameters: {}
+    scripts: {}

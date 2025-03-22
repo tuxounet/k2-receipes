@@ -1,0 +1,13 @@
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.36.0"
+    }
+  }
+}
+provider "helm" {
+  kubernetes {
+    config_path = var.k8s_config
+  }
+}
