@@ -73,7 +73,7 @@ resource "kubernetes_manifest" "ldap_deployment" {
                 },
                 {
                   name  = "LDAP_ADMIN_PASSWORD"
-                  value = random_password.password.result
+                  value = random_password.ldap_root_password.result
                 },
                 {
                   name  = "LDAP_READONLY_USER"
