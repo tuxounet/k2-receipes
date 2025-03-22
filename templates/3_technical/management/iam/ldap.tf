@@ -33,15 +33,53 @@ resource "kubernetes_manifest" "ldap_deployment" {
         spec = {
           containers = [
             {
-              image           = "docker.io/nginx:latest"
+              image           = "docker.io/osixia/openldap:1.5.0",
               imagePullPolicy = "IfNotPresent"
               name            = "ldap"
               ports = [
                 {
-                  containerPort = 5000
+                  containerPort = 389
                   name          = "ldap"
                   protocol      = "TCP"
                 },
+              ]
+              env = [
+                {
+                  name  = "TZ"
+                  value = "Europe/Paris"
+                },
+                {
+                  name  = "LDAP_ORGANISATION"
+                  value = var.ldap_org
+                },
+                {
+                  name  = "LDAP_DOMAIN"
+                  value = var.ldap_domain
+                },
+                {
+                  name  = "LDAP_BASE_DN"
+                  value = var.ldap_base_dn
+                },
+                {
+                  name  = "LDAP_TLS"
+                  value = "false"
+                },
+                {
+                  name  = "LDAP_ADMIN_PASSWORD"
+                  value = var.ldap_root_password
+                },
+                {
+                  name  = "LDAP_READONLY_USER"
+                  value = "true"
+                },
+                {
+                  name  = "LDAP_READONLY_USER_USERNAME"
+                  value = "readonly"
+                },
+                {
+                  name  = "LDAP_READONLY_USER_PASSWORD"
+                  value = "onlyread"
+                }
               ]
               resources = {}
             },
