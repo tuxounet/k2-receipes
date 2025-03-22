@@ -6,6 +6,10 @@ resource "random_password" "ldap_root_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
+output "ldap_root_password" {
+  value = random_password.ldap_root_password.result
+  
+}
 
 resource "kubernetes_manifest" "ldap_deployment" {
   manifest = {
