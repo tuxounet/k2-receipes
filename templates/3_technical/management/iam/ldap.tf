@@ -145,7 +145,7 @@ resource "kubernetes_manifest" "ldap_service_external" {
           name       = "ldap"
           port       = 389
           protocol   = "TCP"
-          nodePort  = 46389
+          nodePort  = 31389
         },
       ]
       selector = {
