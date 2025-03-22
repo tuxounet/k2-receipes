@@ -1,4 +1,4 @@
 output "k8s_config" {
-  value = abspath("${var.run_dir}/.k2/home/.kube/config")
+  value = abspath("${var.run_dir}/home/.kube/config")
 }
 
