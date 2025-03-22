@@ -12,8 +12,7 @@ nuke: terraform_uninstall
 
 validate: setup 
 	$(info Validate the environment)	
-	${TERRAFORM_COMMAND} validate -var-file="./spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
-
+	make -C ${RUN_DIR}/layers/1_physical validate
 
 plan: validate
 	$(info Plan the environment)

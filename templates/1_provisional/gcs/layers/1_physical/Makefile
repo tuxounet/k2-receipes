@@ -8,7 +8,7 @@ LAYER_NAME:=$(shell basename $(RUN_DIR))
 
 WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
 
-validate: 
+validate: prepare 
 	$(info Validate the environment)	
 	${TERRAFORM_COMMAND} validate -var-file=${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
