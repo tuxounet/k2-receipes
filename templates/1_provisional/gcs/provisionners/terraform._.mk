@@ -1,7 +1,6 @@
 ROOT_DIR:=$(shell git rev-parse --show-toplevel)
 
 TOFU_EXECUTABLE:=${ROOT_DIR}/.k2/bin/tofu
-TERRAFORM_COMMAND:=TF_DATA_DIR=$(shell pwd)/.k2/state ${TOFU_EXECUTABLE}
 
 terraform_auth:
 	bash ${ROOT_DIR}/provisionners/terraform.auth.sh 
