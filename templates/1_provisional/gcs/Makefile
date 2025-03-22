@@ -1,43 +1,34 @@
-include provisionners/terraform._.mk
+ROOT_DIR:=$(shell git rev-parse --show-toplevel)
 
-RUN_DIR:=$(shell pwd)
+include ${ROOT_DIR}/provisionners/terraform._.mk
+
+APP_NAME:=$(shell basename $(ROOT_DIR))
+RUN_DIR:=$(shell echo ${ROOT_DIR}/.k2)
 WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
+TERRAFORM_COMMAND:=TF_DATA_DIR=${RUN_DIR}/state/${WORKSPACE_NAME} ${TOFU_EXECUTABLE}
 
-setup: terraform_install
-	$(info Setup the environment)
-	
-
-nuke: terraform_uninstall
-	$(info Nuke the environment)
-
-validate: setup 
+validate: prepare 
 	$(info Validate the environment)	
-	make -C ${RUN_DIR}/layers/1_physical validate
-	make -C ${RUN_DIR}/layers/2_technical validate
-	make -C ${RUN_DIR}/layers/3_logical validate
-	make -C ${RUN_DIR}/layers/4_functionnal validate
+	${TERRAFORM_COMMAND} validate -var-file=${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
-plan:  setup
+prepare: terraform_auth
+	${TERRAFORM_COMMAND} init -backend-config="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.backend.hcl" -backend-config="prefix=k2/${APP_NAME}/${WORKSPACE_NAME}"
+	${TOFU_EXECUTABLE} fmt
+
+plan: prepare
 	$(info Plan the environment)
-	make -C ${RUN_DIR}/layers/1_physical plan
-	make -C ${RUN_DIR}/layers/2_technical plan
-	make -C ${RUN_DIR}/layers/3_logical plan
-	make -C ${RUN_DIR}/layers/4_functionnal plan
+	${TERRAFORM_COMMAND} plan  -var-file="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
-apply:  setup
+apply: prepare
 	$(info Apply the environment)
-	make -C ${RUN_DIR}/layers/1_physical apply
-	make -C ${RUN_DIR}/layers/2_technical apply
-	make -C ${RUN_DIR}/layers/3_logical apply
-	make -C ${RUN_DIR}/layers/4_functionnal apply
+	${TERRAFORM_COMMAND} apply -auto-approve  -var-file="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
-destroy:  setup
+destroy: prepare
 	$(info Destroy the environment)
-	make -C ${RUN_DIR}/layers/4_functionnal destroy
-	make -C ${RUN_DIR}/layers/3_logical destroy
-	make -C ${RUN_DIR}/layers/2_technical destroy	
-	make -C ${RUN_DIR}/layers/1_physical destroy
+	${TERRAFORM_COMMAND} destroy  -var-file="${ROOT_DIR}/spaces/${WORKSPACE_NAME}.tfvars" -var "space=${WORKSPACE_NAME}" -var "run_dir=${RUN_DIR}"
 
-
+graph: validate
+	$(info Generate the graph)
+	${TERRAFORM_COMMAND} graph  
 
 
