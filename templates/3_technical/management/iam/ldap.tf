@@ -8,7 +8,7 @@ resource "random_password" "ldap_root_password" {
 
 output "ldap_root_password" {
   value = random_password.ldap_root_password.result
-  
+
 }
 
 resource "kubernetes_manifest" "ldap_deployment" {
@@ -100,6 +100,59 @@ resource "kubernetes_manifest" "ldap_deployment" {
           terminationGracePeriodSeconds = 30
         }
       }
+
+    }
+  }
+}
+
+resource "kubernetes_manifest" "ldap_service_internal" {
+  manifest = {
+    apiVersion = "v1"
+    kind       = "Service"
+    metadata = {
+      "name"      = "ldap"
+      "namespace" = kubernetes_namespace.management_iam.metadata.0.name
+    }
+    spec = {
+      ports = [
+        {
+          name       = "ldap"
+          port       = 389
+          protocol   = "TCP"
+          targetPort = 389
+        },
+      ]
+      selector = {
+        "app" = "ldap"
+      }
+      type = "ClusterIP"
+    }
+  }
+}
+
+
+resource "kubernetes_manifest" "ldap_service_external" {
+  manifest = {
+    apiVersion = "v1"
+    kind       = "Service"
+    metadata = {
+      "name"      = "ldap-external"
+      "namespace" = kubernetes_namespace.management_iam.metadata.0.name
+    }
+    spec = {
+      ports = [
+        {
+          name       = "ldap"
+          port       = 389
+          protocol   = "TCP"
+          targetPort = 46389
+        },
+      ]
+      selector = {
+        "app" = "ldap"
+      }
+      type = "NodePort"
+
 
     }
   }
