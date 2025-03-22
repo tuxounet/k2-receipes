@@ -4,7 +4,7 @@ include ${ROOT_DIR}/provisionners/terraform._.mk
 
 APP_NAME:=$(shell basename $(ROOT_DIR))
 RUN_DIR:=$(shell echo ${ROOT_DIR})
-LAYER_NAME:=$(shell basename $(RUN_DIR))
+LAYER_NAME:=$(shell basename $(shell pwd))
 WORKSPACE_NAME:=$(shell git rev-parse --abbrev-ref HEAD || echo "sample")
 TERRAFORM_COMMAND:=TF_DATA_DIR=${RUN_DIR}/.k2/state/${LAYER_NAME}/${WORKSPACE_NAME} ${TOFU_EXECUTABLE}
 
