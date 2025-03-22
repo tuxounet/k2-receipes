@@ -10,15 +10,14 @@ resource "kubernetes_namespace" "management_iam" {
 
 
 resource "kubernetes_manifest" "ldap_deployment" {
-  provider = kubernetes.default
-
-  namespace = kubernetes_namespace.management_iam.metadata.0.name
-
+  
+  
   manifest = <<EOF
   apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ldap
+  namespace: ${kubernetes_namespace.management_iam.metadata.0.name}
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
