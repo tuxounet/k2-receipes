@@ -1,27 +1,28 @@
-resource "terraform_data" "microk8s_setup" {
+resource "terraform_data" "authority_ca" {
   triggers_replace = [
-    fileexists("../../.k2/state/status/microk8s"),
-    fileexists("../../.k2/home/.kube/config"),
+    fileexists("${var.run_dir}/etc/pki/ca/ca.key"),
+    fileexists("${var.run_dir}/etc/pki/ca/ca.crt"),
   ]
- 
+  input = {
+    run_dir = var.run_dir
+
+  }
 
 
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
-        SNAP_PRESENT=$(snap list | grep "^microk8s" | wc -l)
-        if [ $SNAP_PRESENT -eq 0 ]; then
-            sudo snap install microk8s --classic            
-            mkdir -p $(pwd)/.k2/state/status
-            touch $(pwd)/.k2/state/status/microk8s
-            sudo usermod -a -G microk8s $(whoami)        
-            newgrp microk8s
-          
+              
+        mkdir -p ${self.input.run_dir}/etc/pki/ca       
+        if [ ! -f ${var.run_dir}/etc/pki/ca/ca.key ]; then
+            openssl genrsa -out ${var.run_dir}/etc/pki/ca/ca.key 4096
         fi
-        microk8s status --wait-ready        
-        mkdir -p $(pwd)/.k2/home/.kube
-        microk8s config > $(pwd)/.k2/home/.kube/config        
-        
+
+        if [ ! -f ${var.run_dir}/etc/pki/ca/ca.crt ]; then
+            openssl req -x509 -new -nodes -key ${var.run_dir}/etc/pki/ca/ca.key -sha256 -days 3650 -out ${var.run_dir}/etc/pki/ca/ca.crt -subj "/C=US/ST=CA/L=San Francisco/O=K2/OU=K2/CN=${var.ca_common_name}"
+        fi
+
+    
     EOT
   }
 
@@ -29,14 +30,7 @@ resource "terraform_data" "microk8s_setup" {
     when        = destroy
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
-        SNAP_PRESENT=$(snap list | grep "^microk8s" | wc -l)
-        if [ $SNAP_PRESENT -eq 1 ]; then
-            sudo snap remove microk8s   
-            rm -rf $(pwd)/.k2/state/status/microk8s
-        fi
-
-        rm -rf $(pwd)/.k2/home/.kube
-        
+        rm -rf ${self.input.run_dir}/etc/pki/ca
     EOT
   }
 
